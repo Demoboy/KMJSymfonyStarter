@@ -1,0 +1,27 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    toolkit_admin_firstname: ~
+    toolkit_admin_lastname: ~
+    toolkit_admin_username: ~
+    toolkit_admin_email: ~
+    toolkit_admin_password: ~
+
+    kmj_sync_ssh_host: ~
+    kmj_sync_ssh_port: 22
+    kmj_sync_ssh_username: ~
+    kmj_sync_ssh_path: ~
+    

@@ -1,0 +1,33 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    acl:
+      connection: default
+      
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                default_target_path: /
+            logout:       true
+            anonymous:    true
+            remember_me:
+                key:      "%secret%"
+                lifetime: 604800 # 7 days in seconds
+                path:     /
+                domain:   ~
+            
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
