@@ -4,11 +4,11 @@
     "type": "project",
     "description": "Customized Symfony starter. Includes JMSsecurity, JMSDiExtra, and FOSUser",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": {"": "src/"}
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.4",
+        "symfony/symfony": "2.4.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
@@ -22,6 +22,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/security-extra-bundle": "dev-master",
         "jms/di-extra-bundle": "1.4.*@dev",
+        "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "kmj/syncbundle": "dev-master",
@@ -47,8 +48,8 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "dev",
     "extra": {
+        "symfony-assets-install": "symlink",
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "incenteev-parameters": {
