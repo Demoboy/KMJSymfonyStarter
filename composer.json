@@ -4,7 +4,9 @@
     "type": "project",
     "description": "Customized Symfony starter. Includes JMSsecurity, JMSDiExtra, and FOSUser",
     "autoload": {
-        "psr-0": {"": "src/"}
+        "psr-0": {
+            "": "src/"
+        }
     },
     "require": {
         "php": ">=5.3.3",
@@ -27,7 +29,8 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "kmj/syncbundle": "dev-master",
         "kmj/cronbundle": "dev-master",
-        "kmj/toolkitbundle": "dev-master"
+        "kmj/toolkitbundle": "dev-master",
+        "misd/phone-number-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [

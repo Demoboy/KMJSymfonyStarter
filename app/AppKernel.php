@@ -24,6 +24,7 @@ class AppKernel extends Kernel {
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new KMJ\CronBundle\KMJCronBundle(),
             new KMJ\SyncBundle\KMJSyncBundle(),
+            new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
