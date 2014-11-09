@@ -20,6 +20,13 @@ parameters:
     toolkit_admin_email: ~
     toolkit_admin_password: ~
 
+    node_path:  /usr/bin/node
+    node_module_path: /usr/local/lib/node_modules
+    uglify_js_path: /usr/local/bin/uglifyjs
+    uglify_css: /usr/local/bin/uglifycss
+    less_path: /usr/local/bin/lessc
+    wkhtmltopdf: /usr/local/bin/wkhtmltopdf
+
     kmj_sync_ssh_host: ~
     kmj_sync_ssh_port: 22
     kmj_sync_ssh_username: ~

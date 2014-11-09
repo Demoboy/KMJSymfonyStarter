@@ -19,7 +19,7 @@ framework:
     trusted_proxies: ~
     session:         
         handler_id: session.handler.native_file
-        save_path: "%kernel.root_dir%/cache/sessions"
+        save_path: null
     fragments:       ~
     http_method_override: true
 
@@ -36,14 +36,16 @@ assetic:
     #java: /usr/bin/java
     filters:
         uglifyjs:
-            bin: /usr/local/bin/uglifyjs
+            node: %node_path%
+            bin: %uglify_js_path%
         uglifycss:
-            bin: /usr/local/bin/uglifycss
+            node:  %node_path%
+            bin: %uglify_css%
             cssrewrite: ~
         less:
-            node: /usr/local/bin/node
-            node_paths: [/usr/local/lib/node_modules]
-            bin: /usr/bin/less
+            node:  %node_path%
+            node_paths: [%node_module_path%]
+            bin: %less_path%
             apply_to: "\.less$"
         
 # Doctrine Configuration

@@ -1,171 +1,128 @@
-Symfony Standard Edition
+KMJ Standard Symfony Project
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+The goal of this project was to provide a ready-to-code installation of the Symfony2 Framework.
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
+This Symfony project comes bundled (configs included) with
+   
+    [**FOSUserBundle**][1]
+    [**KMJToolkitBundle**][2]
+    [**KMJCronBundle**][3]
+    [**KMJSyncBundle**][4]
+    [**Vagrant**][5] with [**Ansible**][6] configuration
 
-1) Installing the Standard Edition
+The virtual machine will come with the following installed:
+
+    Apache 2.4
+    PHP 5.6 
+    Composer
+    wkhtmltopdf
+    nodejs
+    lessc
+    uglifiycss
+    uglifiyjs
+
+
+1) System Requirements
 ----------------------------------
 
-When it comes to installing the Symfony Standard Edition, you have the
-following options.
+Current this project has only be tested on Mac OS X, but should work just fine without modification
+on any *inx based system. Windows support is not available at this time, although it should not take
+much to get it working.
 
-### Use Composer (*recommended*)
+Please make sure you have installed the following dependencies installed on your system. 
 
-As Symfony uses [Composer][2] to manage its dependencies, the recommended way
-to create a new project is to use it.
+    [**Git**][9]
+    [**Vagrant**][5]
+    [**vagrant-vbguest**][7] (recommended to keep the vagrant box guest drivers up to date)
+    [**Ansible**][6]
+    [**VirtualBox**][8]
 
-If you don't have Composer yet, download it following the instructions on
-http://getcomposer.org/ or just run the following command:
+Since we are using vagrant, PHP and Composer are not required as the Ansible configuration
+will automatically install it when the vagrant box first boots
 
-    curl -s http://getcomposer.org/installer | php
 
-Then, use the `create-project` command to generate a new Symfony application:
+2) Installation
+----------------------------------
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install
+Using Git
 
-Composer will install Symfony and all its dependencies under the
-`path/to/install` directory.
+The best way to install the project is to clone the repository and then remove 
+the .git folder so that you can start with a fresh project. The following commands 
+will do just that.
 
-### Download an Archive File
+    git clone https://github.com/Demoboy/KMJSymfonyStarter.git projectname
+    cd projectname
+    rm -rf .git
+    git init
+    git add *
+    git commit -a -m "First commit"
 
-To quickly test Symfony, you can also download an [archive][3] of the Standard
-Edition and unpack it somewhere under your web server root directory.
 
-If you downloaded an archive "without vendors", you also need to install all
-the necessary dependencies. Download composer (see above) and run the
-following command:
+Manual Installation
 
-    php composer.phar install
+If git is not available on the system you can download the master zip file from the repository
+directly. Then remove the .git folder.
 
-2) Checking your System Configuration
--------------------------------------
+3) Basic Configuration
+----------------------------------
 
-Before starting coding, make sure that your local system is properly
-configured for Symfony.
+The only configuration that is required is to modify the vagrantvars.rb file. 
+The configuration options are described in that file.
 
-Execute the `check.php` script from the command line:
+Once that file has been modified you can modify your computers hosts file to 
+link the URL to the ip address. In *nix based systems the hosts file can usually be found 
+in /etc/hosts. You will need root access to modify this file. If using the default configuration
+adding the following line to your hosts file will allow you to type kmj.app into the URL bar of your browser.
 
-    php app/check.php
+    192.168.33.99   kmj.app
 
-The script returns a status code of `0` if all mandatory requirements are met,
-`1` otherwise.
+4) First run
+----------------------------------
 
-Access the `config.php` script from a browser:
+To begin the automated setup of the box type
 
-    http://localhost/path/to/symfony/app/web/config.php
+    vagrant up
 
-If you get any warnings or recommendations, fix them before moving on.
+See the vagrant documentation to see exactly is going on while running this command.
+This process will take a few minutes while it installs the necessary applications and binaries.
 
-3) Browsing the Demo Application
---------------------------------
+After the installation is complete run:
 
-Congratulations! You're now ready to use Symfony.
+    vagrant ssh
+    cd /vagrant
 
-From the `config.php` page, click the "Bypass configuration and go to the
-Welcome page" link to load up your first Symfony page.
+This will remote you into the newly created virtual machine and change the directory to the project.
+From here you can run Composer and any other project configuration that might need to take place. 
+But after that is all completed, you will be able to visit the URL in the vagrantvars.rb and view the site.
 
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the `config.php` page.
 
-To see a real-live Symfony page in action, access the following page:
+5) Environments
+----------------------------------
 
-    web/app_dev.php/demo/hello/Fabien
+Vagrant has been configured to have different virtual machines based on the environment you want.
+The default ones are:
+    
+    dev
+    test
+    prod
 
-4) Getting started with Symfony
--------------------------------
+The dev environment is the default and therefore running vagrant up loads the dev Vagrant box.
+If you want to load up the testing environment just type
+   
+    vagrant up test
 
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
+There will also be an Ansible variable set called environment that will contain 
+the current loading environment which is handy if needing to only install certain programs in
+specific environments.
 
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
 
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
-
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
-
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-  * remove the AcmeDemoBundle from the registered bundles in `app/AppKernel.php`;
-
-  * remove the `web/bundles/acmedemo` directory;
-
-  * remove the `security.providers`, `security.firewalls.login` and
-    `security.firewalls.secured_area` entries in the `security.yml` file or
-    tweak the security configuration to fit your needs.
-
-What's inside?
----------------
-
-The Symfony Standard Edition is configured with the following defaults:
-
-  * Twig is the only configured template engine;
-
-  * Doctrine ORM/DBAL is configured;
-
-  * Swiftmailer is configured;
-
-  * Annotations for everything are enabled.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.4/book/installation.html
-[2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.4/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.4/index.html
-[6]:  http://symfony.com/doc/2.4/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.4/book/doctrine.html
-[8]:  http://symfony.com/doc/2.4/book/templating.html
-[9]:  http://symfony.com/doc/2.4/book/security.html
-[10]: http://symfony.com/doc/2.4/cookbook/email.html
-[11]: http://symfony.com/doc/2.4/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.4/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.4/bundles/SensioGeneratorBundle/index.html
+[1]: https://github.com/FriendsOfSymfony/FOSUserBundle
+[2]: https://github.com/Demoboy/ToolkitBundle
+[3]: https://github.com/Demoboy/KMJCronBundle
+[4]: https://github.com/Demoboy/KMJSyncBundle
+[5]: https://www.vagrantup.com
+[6]: http://www.ansible.com/home
+[7]: https://github.com/dotless-de/vagrant-vbguest
+[8]: https://www.virtualbox.org
+[9]: http://git-scm.com

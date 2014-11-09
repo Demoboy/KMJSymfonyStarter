@@ -3,13 +3,10 @@
   sudo: true
   vars:
     web_server: apachephp
-    servername: kmj.app
     timezone: UTC
     max_nesting_level: 300
     memory_limit: 512M
-    enviroment: dev
   vars_files:
-    - vars/mysql.yml
     - vars/common.yml
     - [ "vars/apachephp.yml", "vars/ws_defaults.yml" ]
   roles:
