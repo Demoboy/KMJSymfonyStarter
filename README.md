@@ -5,11 +5,11 @@ The goal of this project was to provide a ready-to-code installation of the Symf
 
 This Symfony project comes bundled (configs included) with
    
-    [**FOSUserBundle**][1]
-    [**KMJToolkitBundle**][2]
-    [**KMJCronBundle**][3]
-    [**KMJSyncBundle**][4]
-    [**Vagrant**][5] with [**Ansible**][6] configuration
+   * [**FOSUserBundle**][1]
+   * [**KMJToolkitBundle**][2]
+   * [**KMJCronBundle**][3]
+   * [**KMJSyncBundle**][4]
+   * [**Vagrant**][5] with [**Ansible**][6] configuration
 
 The virtual machine will come with the following installed:
 
@@ -32,11 +32,11 @@ much to get it working.
 
 Please make sure you have installed the following dependencies installed on your system. 
 
-    [**Git**][9]
-    [**Vagrant**][5]
-    [**vagrant-vbguest**][7] (recommended to keep the vagrant box guest drivers up to date)
-    [**Ansible**][6]
-    [**VirtualBox**][8]
+   * [**Git**][9]
+   * [**Vagrant**][5]
+   * [**vagrant-vbguest**][7] (recommended to keep the vagrant box guest drivers up to date)
+   * [**Ansible**][6]
+   * [**VirtualBox**][8]
 
 Since we are using vagrant, PHP and Composer are not required as the Ansible configuration
 will automatically install it when the vagrant box first boots
