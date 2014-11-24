@@ -94,7 +94,8 @@ kmj_toolkit:
         username: %toolkit_admin_username%
         email: %toolkit_admin_email%
         password: %toolkit_admin_password%
-        
+
+h4cc_alice_fixtures: ~
         
 kmj_sync:
     ssh:
@@ -106,10 +107,9 @@ kmj_sync:
     backups: %kernel.root_dir%/Resources/backups
     compression: tar
     numberofbackups: 3
-    paths: ~           
     database:            
        type: mysql      
-       host: localhost        
+       host: %database_host%        
        database: "%database_name%"        
        user: "%database_user%"      
        password: "%database_password%" 

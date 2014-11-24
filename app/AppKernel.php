@@ -21,7 +21,6 @@ class AppKernel extends Kernel {
             new KMJ\ToolkitBundle\KMJToolkitBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new KMJ\CronBundle\KMJCronBundle(),
             new KMJ\SyncBundle\KMJSyncBundle(),
             new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
@@ -31,6 +30,7 @@ class AppKernel extends Kernel {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
         }
 
         return $bundles;

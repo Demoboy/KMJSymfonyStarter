@@ -25,14 +25,14 @@
         "jms/di-extra-bundle": "1.4.*@dev",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "kmj/syncbundle": "dev-master",
         "kmj/cronbundle": "dev-master",
         "kmj/toolkitbundle": "dev-master",
         "misd/phone-number-bundle": "~1.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "h4cc/alice-fixtures-bundle": "0.5.x"
     },
     "scripts": {
         "post-install-cmd": [
