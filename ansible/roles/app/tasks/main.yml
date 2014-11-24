@@ -4,6 +4,13 @@
                 regexp='export SYMFONY_ENV='
                 line='export SYMFONY_ENV= {{ enviroment }}'    
 
+-   name: Set auto cd into /vagrant
+    sudo: yes
+    sudo_user: vagrant
+    lineinfile: dest=/home/vagrant/.bash_profile
+                regexp='cd /vagrant/'
+                line='cd /vagrant/'
+
 -   name: Fix permissions
     command: chmod -R 777 app/logs app/cache
     ignore_errors: yes
