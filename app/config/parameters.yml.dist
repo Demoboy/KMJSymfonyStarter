@@ -27,8 +27,8 @@ parameters:
     less_path: /usr/local/bin/lessc
     wkhtmltopdf: /usr/local/bin/wkhtmltopdf
 
-    kmj_sync_ssh_host: ~
+    kmj_sync_ssh_host: localhost
     kmj_sync_ssh_port: 22
-    kmj_sync_ssh_username: ~
-    kmj_sync_ssh_path: ~
+    kmj_sync_ssh_username: root
+    kmj_sync_ssh_path: /
     
