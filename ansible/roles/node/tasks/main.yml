@@ -13,4 +13,4 @@
   
 - name: install uglify css/js and less
   sudo: yes
-  command: npm install -g uglifycss uglify-js less
+  command: npm install -g uglifycss uglify-js less@1.7.5

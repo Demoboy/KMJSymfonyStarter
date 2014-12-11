@@ -6,7 +6,7 @@ include VagrantVars
 
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
-    config.vm.box_url = "https://vagrantcloud.com/ubuntu/trusty64/version/1/provider/virtualbox.box"
+    config.vm.box_url = "https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
     config.vm.hostname = HOST_NAME
     config.vm.network :private_network, ip: IP_ADDRESS
     config.ssh.forward_agent = true
@@ -33,6 +33,8 @@ Vagrant.configure("2") do |config|
 
             v.customize ["modifyvm", :id, "--memory", mem]
             v.customize ["modifyvm", :id, "--cpus", cpus]
+            v.customize ["modifyvm", :id, "--cpuexecutioncap", "100"]
+            v.customize ["modifyvm", :id, "--hwvirtex", "on"]
         end
 
         dev.vm.provision "ansible" do |ansible|
@@ -69,6 +71,8 @@ Vagrant.configure("2") do |config|
 
             v.customize ["modifyvm", :id, "--memory", mem]
             v.customize ["modifyvm", :id, "--cpus", cpus]
+            v.customize ["modifyvm", :id, "--cpuexecutioncap", "100"]
+            v.customize ["modifyvm", :id, "--hwvirtex", "on"]
         end
 
         test.vm.provision "ansible" do |ansible|
@@ -111,6 +115,8 @@ Vagrant.configure("2") do |config|
 
             v.customize ["modifyvm", :id, "--memory", mem]
             v.customize ["modifyvm", :id, "--cpus", cpus]
+            v.customize ["modifyvm", :id, "--cpuexecutioncap", "100"]
+            v.customize ["modifyvm", :id, "--hwvirtex", "on"]
         end
 
         prod.vm.provision "ansible" do |ansible|
