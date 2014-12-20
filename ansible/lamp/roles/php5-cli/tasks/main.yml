@@ -7,7 +7,6 @@
               regexp='date.timezone ='
               line='date.timezone = {{ timezone }}'
               
-              
 - name: set xdebug max_nesting_level
   lineinfile: dest=/etc/php5/cli/php.ini
               regexp='xdebug.max_nesting_level ='

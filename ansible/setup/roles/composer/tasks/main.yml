@@ -1,0 +1,11 @@
+-   name: update composer
+    when: enviroment == "dev" or enviroment == "test"
+    command: composer update --no-interaction
+    args:
+        chdir: /vagrant/
+
+-   name: install composer
+    when: enviroment == "prod"
+    command: composer install --no-dev
+    args:
+        chdir: /vagrant/

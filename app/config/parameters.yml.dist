@@ -2,9 +2,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     kmj
     database_user:     root
-    database_password: ~
+    database_password: password
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -14,11 +14,11 @@ parameters:
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    toolkit_admin_firstname: ~
-    toolkit_admin_lastname: ~
-    toolkit_admin_username: ~
-    toolkit_admin_email: ~
-    toolkit_admin_password: ~
+    toolkit_admin_firstname: Dev
+    toolkit_admin_lastname: User
+    toolkit_admin_username: devusr
+    toolkit_admin_email: dev@example.com
+    toolkit_admin_password: password
 
     node_path:  /usr/bin/node
     node_module_path: /usr/local/lib/node_modules
@@ -31,4 +31,3 @@ parameters:
     kmj_sync_ssh_port: 22
     kmj_sync_ssh_username: root
     kmj_sync_ssh_path: /
-    

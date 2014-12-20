@@ -1,0 +1,20 @@
+-   name: Setup bash profile
+    lineinfile: dest=/home/vagrant/.bash_profile
+                create=yes
+                regexp="{{ item.reg }}"
+                line="{{ item.line }}"
+    with_items:
+        - { reg: 'export SYMFONY_ENV=', line: "export SYMFONY_ENV={{ enviroment }}"}
+        - { reg: 'cd /vagrant/', line: 'cd /vagrant/'}
+        - { reg: 'export PATH=$HOME/.composer/vendor/bin/:$PATH', line: 'export PATH=$HOME/.composer/vendor/bin/:$PATH' }
+
+-   name: Change bash up and down arrow function
+    sudo: yes
+    sudo_user: vagrant
+    lineinfile: dest="/home/vagrant/.inputrc"
+                create=yes
+                regexp="{{ item.reg }}"
+                line="{{ item.line }}"
+    with_items:
+        - { reg: '\"\\e\[A\":history-search-backward', line: '\"\\e[A\":history-search-backward' }
+        - { reg: '\"\\e\[B\":history-search-forward', line: '\"\\e[B\":history-search-forward' }

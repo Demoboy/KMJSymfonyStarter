@@ -1,0 +1,5 @@
+-   name: Sync database from production
+    when: enviroment == "dev"
+    command: app/console kmj:sync:sync --db-only
+    args:
+        chdir: /vagrant/

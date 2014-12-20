@@ -31,8 +31,8 @@
 - name: More Configure the timezone
   sudo: yes
   file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
-  
+
 -   name: add hostname to hosts file
     sudo: yes
     lineinfile: dest=/etc/hosts
-                line='::1   nws.app' 
+                line='::1   {{ servername }}' 
