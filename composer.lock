@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bab9ccbeccec2a5d5b3ac0bc3ad96b8a",
+    "hash": "2c8d39b3401f12e0b620ec935661d749",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -704,12 +704,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "f4fe9d9cc21a711d89d91d29c4a4e7945289cdd0"
+                "reference": "96f838b4fa93693d19196c8e24ed5f1c3972ba87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/f4fe9d9cc21a711d89d91d29c4a4e7945289cdd0",
-                "reference": "f4fe9d9cc21a711d89d91d29c4a4e7945289cdd0",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/96f838b4fa93693d19196c8e24ed5f1c3972ba87",
+                "reference": "96f838b4fa93693d19196c8e24ed5f1c3972ba87",
                 "shasum": ""
             },
             "require": {
@@ -754,7 +754,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2014-10-30 14:49:25"
+            "time": "2014-12-19 17:14:47"
         },
         {
             "name": "doctrine/orm",
@@ -1465,7 +1465,7 @@
         },
         {
             "name": "kmj/toolkitbundle",
-            "version": "1.1.x-dev",
+            "version": "v1.1.0",
             "target-dir": "KMJ/ToolkitBundle",
             "source": {
                 "type": "git",
@@ -2653,11 +2653,9 @@
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
         "kmj/syncbundle": 20,
-        "kmj/cronbundle": 20,
-        "kmj/toolkitbundle": 20
+        "kmj/cronbundle": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },
