@@ -7,9 +7,22 @@ def prompt(*args)
   return response;
 end
 
-if ENV["USER"] != "root"
-  puts "This project must be run in sudo. Requesting permission"
-  exec("sudo #{ENV['_']} #{ARGV.join(' ')}")
+is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
+
+if !is_windows
+  if ENV["USER"] != "root"
+    puts "This project must be run in sudo. Requesting permission"
+    exec("sudo #{ENV['_']} #{ARGV.join(' ')}")
+  end
+else
+  require 'win32/registry'
+  begin
+    Win32::Registry::HKEY_USERS.open('S-1-5-19') do |reg|
+    end
+  rescue
+    puts "Please run this script as an administrator";
+    exit;
+  end
 end
 
 puts "\n  Welcome to the KMJ Symfony Starter Project\n
@@ -35,7 +48,14 @@ end
 require_relative 'vagrantvars.rb'
 include VagrantVars
 
-open('/etc/hosts', 'a') do |f|
+
+if is_windows
+    file = '/cygdrive/c/Windows/System32/Drivers/etc/hosts'
+else
+    file = '/etc/hosts'
+end
+
+open(file, 'a') do |f|
   #Add machines to hosts file
   f.puts(DEV_IP_ADDRESS + "\t" + HOST_NAME + ".dev");
   f.puts(TEST_IP_ADDRESS + "\t" + HOST_NAME + ".test");
