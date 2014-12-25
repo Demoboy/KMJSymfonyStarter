@@ -26,16 +26,16 @@ The virtual machine will come with the following installed:
 1) System Requirements
 ----------------------------------
 
-Current this project has only be tested on Mac OS X, but should work just fine without modification
-on any *inx based system. Windows support is not available at this time, although it should not take
-much to get it working.
+This project should support all operating systems. This guide assumes you are a *nix based system.
 
 Please make sure you have installed the following dependencies installed on your system.
 
    * [**Git**][9]
    * [**Vagrant**][5]
-   * [**vagrant-vbguest**][7] (recommended to keep the vagrant box guest drivers up to date)
-   * [**Ansible**][6]
+   * [**vagrant-vbguest**][7]
+   * [**vagrant-hostsupdater**][10]
+   * [**vagrant-winnfsd**][11] (Windows only)
+   * [**Ansible**][6] (For windows installation see windows section of this document)
    * [**VirtualBox**][8]
 
 Since we are using vagrant, PHP and Composer are not required as the Ansible configuration
@@ -74,18 +74,7 @@ The configuration options are described in that file.
 This means that setting the value of HOST_NAME to "kmj" would configure the dev machine
 to be configured with a host name of "kmj.dev" and a test machine host name of "kmj.test" etc.
 
-A setup script has been included to automatically modify your hosts file for you
-on *nix based systems to allow easy connection.
-Just run:
-  ./setup.rb
-
-You can also make the modifications manually. In *nix based systems the hosts file can usually be found
-in /etc/hosts. You will need root access to modify this file. If using the default configuration
-adding the following line to your hosts file will allow you to type kmj.app into the URL bar of your browser.
-
-  192.168.33.99   kmj.dev
-  192.168.34.99   kmj.test
-  192.168.35.99   kmj.prod
+These domain names are written to your hosts file when you call vagrant up and removed when running vagrant halt
 
 4) First run
 ----------------------------------
@@ -125,6 +114,21 @@ There will also be an Ansible variable set called environment that will contain
 the current loading environment which is handy if needing to only install certain programs in
 specific environments.
 
+6) Windows Support
+----------------------------------
+This project including Vagrant and Ansible can be used in a Windows environment. In order for
+the project to work smoothly a few extra additions need to get made to vagrant. Be sure to install the
+[**vagrant-winnfsd**][11] plugin as using vagrant without nfs is very slow. Be sure to install also install cygwin.
+
+When running a Cygwin terminal be sure to run it as administrator otherwise the vagrant up command will
+fail when it attempts to write the hostname to the hosts file.
+
+Sometimes when running the vagrant plugin install command an error would pop up complaining that a root
+certificate was invalid when installing from https://rubygems.org. A work around is to install the plugin from the
+non SSL site. Just append --plugin-source http://rubygems.org to the command and it should install smoothly.
+
+Since Ansible is not available to run on a windows host, there is a shell script to install Ansible on
+your newly created virtual machine. The script will then configure the virtual machine locally using Ansible
 
 [1]: https://github.com/FriendsOfSymfony/FOSUserBundle
 [2]: https://github.com/Demoboy/ToolkitBundle
@@ -135,3 +139,5 @@ specific environments.
 [7]: https://github.com/dotless-de/vagrant-vbguest
 [8]: https://www.virtualbox.org
 [9]: http://git-scm.com
+[10]: https://github.com/cogitatio/vagrant-hostsupdater
+[11]: https://github.com/GM-Alex/vagrant-winnfsd

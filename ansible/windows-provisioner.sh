@@ -3,8 +3,6 @@
 ANSIBLE_PLAYBOOK=$1
 ANSIBLE_EXTRA_VARS=$2
 
-echo $2
-
 # Detect package management system.
 YUM=$(which yum)
 APT_GET=$(which apt-get)

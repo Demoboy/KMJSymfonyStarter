@@ -1,16 +1,28 @@
 require_relative 'vagrantvars.rb'
 include VagrantVars
 
+unless Vagrant.has_plugin?("vagrant-vbguest")
+  raise 'VBGuest plugin is not installed'
+end
+
+if Vagrant::Util::Platform.windows?
+  unless Vagrant.has_plugin?("vagrant-winnfsd")
+    raise 'Winnfsd plugin not installed and is required for a windows install'
+  end
+end
+
+unless Vagrant.has_plugin?("vagrant-hostsupdater")
+  raise 'hostsupdater plugin not installed and is required'
+end
+
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.box_url = "https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
-  config.vm.hostname = HOST_NAME
+
   config.ssh.forward_agent = true
   config.vm.synced_folder '.', '/vagrant', nfs: true
 
-  is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
-
-  if !is_windows
+  if !Vagrant::Util::Platform.windows?
     config.vm.provision "lamp", type: "ansible" do |lamp|
       lamp.playbook = "ansible/lamp/playbook.yml"
       lamp.limit = 'all'
@@ -19,6 +31,13 @@ Vagrant.configure("2") do |config|
     config.vm.provision "setup", type: "ansible", run: "always" do |setup|
       setup.playbook = "ansible/setup/playbook.yml"
       setup.limit = 'all'
+    end
+  else
+    config.vm.provision "lamp", type: "shell" do |lamp|
+      lamp.path="ansible/windows-provisioner.sh"
+    end
+    config.vm.provision "setup", type: "shell" do |setup|
+      setup.path="ansible/windows-provisioner.sh"
     end
   end
 
@@ -30,11 +49,11 @@ Vagrant.configure("2") do |config|
       cpus = `sysctl -n hw.ncpu`.to_i
       # sysctl returns Bytes and we need to convert to MB
       mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 4
-    elsif host =~ /linux/
+    elsif host =~ /linux/ or Vagrant::Util::Platform.windows?
       cpus = `nproc`.to_i
       # meminfo shows KB and we need to convert to MB
       mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
-    else # sorry Windows folks, I can't help you
+    else
       cpus = 2
       mem = 1024
     end
@@ -52,11 +71,13 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "dev", primary: true do |dev|
     dev.vm.network :private_network, ip: DEV_IP_ADDRESS
+    dev.vm.hostname = HOST_NAME + ".dev"
+
     dev.vm.provider :virtualbox do |v|
       v.name = HOST_NAME + " - Dev"
     end
 
-    if !is_windows
+    if !Vagrant::Util::Platform.windows?
       dev.vm.provision "lamp", type: "ansible" do |lamp|
         lamp.extra_vars = {
           enviroment: "dev",
@@ -74,11 +95,9 @@ Vagrant.configure("2") do |config|
       end
     else
       dev.vm.provision "lamp", type: "shell" do |lamp|
-        lamp.path="ansible/windows-provisioner.sh"
         lamp.args="ansible/lamp/playbook.yml  \"enviroment=dev servername="+HOST_NAME+".dev database_name="+DATABASE_NAME+" database_user=" + DATABASE_USER + " database_password="+DATABASE_PASSWORD+"\""
       end
       dev.vm.provision "setup", type: "shell" do |setup|
-        setup.path="ansible/windows-provisioner.sh"
         setup.args="ansible/setup/playbook.yml  \"enviroment=dev\""
       end
     end
@@ -87,12 +106,13 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "test", autostart: false do |test|
     test.vm.network :private_network, ip: TEST_IP_ADDRESS
+    test.vm.hostname = HOST_NAME + ".test"
 
     test.vm.provider :virtualbox do |v|
       v.name = HOST_NAME + " - Test"
     end
 
-    if !is_windows
+    if !Vagrant::Util::Platform.windows?
       test.vm.provision "lamp", type: "ansible" do |lamp|
         lamp.extra_vars = {
           enviroment: "test",
@@ -110,11 +130,9 @@ Vagrant.configure("2") do |config|
       end
     else
       test.vm.provision "lamp", type: "shell" do |lamp|
-        lamp.path="ansible/windows-provisioner.sh"
         lamp.args="ansible/lamp/playbook.yml  \"enviroment=test servername="+HOST_NAME+".test database_name="+DATABASE_NAME+" database_user=" + DATABASE_USER + " database_password="+DATABASE_PASSWORD+"\""
       end
       test.vm.provision "setup", type: "shell" do |setup|
-        setup.path="ansible/windows-provisioner.sh"
         setup.args="ansible/setup/playbook.yml  \"enviroment=test\""
       end
     end
@@ -122,6 +140,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "prod", autostart: false do |prod|
     prod.vm.network :private_network, ip: PROD_IP_ADDRESS
+    prod.vm.hostname = HOST_NAME + ".prod"
+
     prod.vm.synced_folder '.', '/vagrant', type: "rsync",
     rsync__exclude: [
       ".git/",
@@ -132,8 +152,7 @@ Vagrant.configure("2") do |config|
       v.name = HOST_NAME + " - Prod"
     end
 
-
-    if !is_windows
+    if !Vagrant::Util::Platform.windows?
       prod.vm.provision "lamp", type: "ansible" do |lamp|
         lamp.extra_vars = {
           enviroment: "prod",
@@ -151,15 +170,11 @@ Vagrant.configure("2") do |config|
       end
     else
       prod.vm.provision "lamp", type: "shell" do |lamp|
-        lamp.path="ansible/windows-provisioner.sh"
         lamp.args="ansible/lamp/playbook.yml  \"enviroment=prod servername="+HOST_NAME+".prod database_name="+DATABASE_NAME+" database_user=" + DATABASE_USER + " database_password="+DATABASE_PASSWORD+"\""
       end
       prod.vm.provision "setup", type: "shell" do |setup|
-        setup.path="ansible/windows-provisioner.sh"
         setup.args="ansible/setup/playbook.yml  \"enviroment=prod\""
       end
     end
-
-
   end
 end
