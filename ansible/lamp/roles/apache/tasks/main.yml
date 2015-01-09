@@ -12,6 +12,7 @@
     - headers
     - expires
     - filter
+    - ssl
 
 - shell: apache2 -v
   register: apache_version
@@ -40,3 +41,15 @@
                 line='export APACHE_RUN_GROUP=vagrant'
     notify: restart apache
         
+-   name: Create SSL key folder
+    sudo: yes
+    file: path="/etc/apache2/ssl"
+          state="directory"
+          owner="root"
+    
+-   name: Generate SSL Key
+    sudo: yes
+    command: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/{{servername}}.key -out /etc/apache2/ssl/{{servername}}.crt -subj '/CN={{servername}}/O=Vagrant VM/C=US'
+    notify: restart apache
+    args:
+        creates: /etc/apache2/ssl/{{servername}}.key
