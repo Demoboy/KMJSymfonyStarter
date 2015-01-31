@@ -3,6 +3,9 @@ jms_security_extra:
     expressions: true
 
 security:
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ALLOWED_TO_SWITCH]
+    
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
@@ -12,6 +15,7 @@ security:
 
     firewalls:
         main:
+            switch_user: true
             pattern: ^/
             form_login:
                 provider: fos_userbundle

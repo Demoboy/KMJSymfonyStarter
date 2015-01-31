@@ -27,7 +27,7 @@
         "doctrine/doctrine-migrations-bundle": "2.1.*@dev",
         "kmj/syncbundle": "dev-master",
         "kmj/cronbundle": "dev-master",
-        "kmj/toolkitbundle": "1.1.0",
+        "kmj/toolkitbundle": "~1.1@dev",
         "misd/phone-number-bundle": "~1.0"
     },
     "require-dev": {

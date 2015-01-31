@@ -5,7 +5,7 @@
 -   name: download wkhtmltopdf
     register: wkhtmltopdf
     when: fileCheck.stdout.find("exists") != -1
-    get_url: url=http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb
+    get_url: url={{ wkhtmltopdf_url }}
              dest=/tmp/wkhtmltopdf.deb
    
 -   name: install wkhtmltopdf
