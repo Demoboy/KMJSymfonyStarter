@@ -1,7 +1,7 @@
 - name: Install php5-cli
   sudo: yes
   apt: pkg=php5-cli state=latest
-  
+
 -   name: Setup php.ini
     sudo: yes
     lineinfile: dest="/etc/php5/cli/php.ini"

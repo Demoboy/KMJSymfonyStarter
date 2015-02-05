@@ -1,3 +1,10 @@
 ---
 - name: restart apache
   service: name=apache2 enabled=yes state=restarted
+  
+- name: use FPM
+  sudo: yes
+  template: src=vhost24fpm.conf.tpl dest=/etc/apache2/sites-available/000-default.conf
+  notify: 
+    - restart apache
+    - restart php-fpm

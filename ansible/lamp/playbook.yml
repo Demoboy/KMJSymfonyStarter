@@ -14,9 +14,11 @@
     - php5-cli
     - apache
     - php5
+    - php-fpm
     - mysql
     - composer
     - phpcommon
     - node
     - wkhtmltopdf
+    - phpmyadmin
     - bash

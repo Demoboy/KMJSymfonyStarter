@@ -1,0 +1,26 @@
+
+- name: Install php5-fpm
+  sudo: yes
+  apt: pkg=php5-fpm state=latest
+
+- name: Install Apache fcgid
+  sudo: yes
+  apt: pkg=libapache2-mod-fcgid state=latest
+  
+- name: Enable needed apache mods
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - proxy
+    - proxy_fcgi
+    - fcgid
+    
+- name: Setup fpm config
+  lineinfile: dest=/etc/php5/fpm/php-fpm.conf
+            create=no
+            regexp="{{ item.reg }}"
+            line="{{ item.line }}"
+  with_items:
+    - { reg: 'user = ', line: "user = vagrant"}
+    - { reg: 'group = ', line: 'group = vagrant'}
+    - { reg: 'listen = ', line: 'listen = 127.0.0.1:9000' } 
+  notify: use FPM
