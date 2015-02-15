@@ -1,0 +1,41 @@
+- name: Install Vim and packages
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+      - vim
+      - exuberant-ctags
+      
+- file: path=/home/vagrant/.vim/bundle state=directory
+  sudo: yes
+  sudo_user: vagrant
+  
+- name: Install Vundle
+  sudo: yes
+  sudo_user: vagrant
+  command: git clone https://github.com/gmarik/Vundle.vim.git /home/vagrant/.vim/bundle/Vundle.vim
+  args:
+      creates: /home/vagrant/.vim/bundle/Vundle.vim
+      
+- stat: path=/home/vagrant/.vimrc
+  sudo: yes
+  sudo_user: vagrant
+  register: vimrc
+  
+- name: Create vimrc
+  sudo: yes
+  sudo_user: vagrant
+  template: src=vimrc.tpl dest=/home/vagrant/.vimrc
+  when: not vimrc.stat.exists      
+
+- name: Install Vim Bundles
+  sudo: yes
+  sudo_user: vagrant
+  command: vim +PluginInstall +qall
+  
+- name: Build vimproc
+  command: make
+  sudo: yes
+  sudo_user: vagrant
+  args:
+      chdir: /home/vagrant/.vim/bundle/vimproc
+      

@@ -21,4 +21,5 @@
     - node
     - wkhtmltopdf
     - phpmyadmin
+    - vim
     - bash
