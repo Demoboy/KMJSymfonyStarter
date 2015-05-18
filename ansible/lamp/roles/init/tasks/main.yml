@@ -14,6 +14,10 @@
 - name: Add ppa Repository
   sudo: yes
   apt_repository: repo=ppa:ondrej/{{ php_ppa }}
+  
+- name: Upgrade OS
+  sudo: yes
+  apt: upgrade=yes
 
 - name: Update apt
   sudo: yes

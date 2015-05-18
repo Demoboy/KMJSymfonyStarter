@@ -1,17 +1,11 @@
 - name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/dbconfig-install' value='true' vtype='boolean'
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/app-password-confirm' value='{{ database_password }}' vtype='password'
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/mysql/admin-pass' value='{{ database_password }}' vtype='password'
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/mysql/app-pass' value='{{ database_password }}' vtype='password'
-
-- name: debconf for pma
-  debconf: name=phpmyadmin question='phpmyadmin/reconfigure-webserver' value='' vtype='multiselect'
+  debconf: name=phpmyadmin question={{ item.question }} value={{ item.value }} vtype={{ item.vtype }}
+  with_items:
+    - { question: "phpmyadmin/dbconfig-install", value: 'true', vtype: "boolean"}
+    - { question: "phpmyadmin/app-password-confirm", value: '{{ database_password }}', vtype: "password"}
+    - { question: "phpmyadmin/mysql/admin-pass", value: '{{ database_password }}', vtype: "password"}
+    - { question: "phpmyadmin/mysql/app-pass", value: '{{ database_password }}', vtype: "password"}
+    - { question: "phpmyadmin/reconfigure-webserver", value: '', vtype: "multiselect"}
 
 - name: install pma
   apt: pkg=phpmyadmin state=present
