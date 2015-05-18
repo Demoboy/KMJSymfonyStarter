@@ -88,6 +88,7 @@ jms_di_extra:
         all_bundles: true
         
 kmj_toolkit:
+    enckey: %toolkit_enckey%
     administrator:
         firstname: %toolkit_admin_firstname%
         lastname: %toolkit_admin_lastname%

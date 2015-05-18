@@ -14,6 +14,7 @@ parameters:
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
+    toolkit_enckey: ChangeThisKey!
     toolkit_admin_firstname: Dev
     toolkit_admin_lastname: User
     toolkit_admin_username: devusr
