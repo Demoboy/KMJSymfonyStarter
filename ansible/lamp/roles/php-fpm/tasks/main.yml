@@ -9,14 +9,7 @@
     lineinfile: dest="/etc/php5/fpm/php.ini"
                 regexp="{{ item.reg }}"
                 line="{{ item.line }}"
-    with_items:
-        - { reg: 'date.timezone =', line: 'date.timezone = {{ timezone }}' }
-        - { reg: 'max_execution_time =', line: 'max_execution_time = 0' }
-        - { reg: 'xdebug.max_nesting_level =', line: 'xdebug.max_nesting_level = {{ max_nesting_level }}' }
-        - { reg: 'memory_limit =', line: 'memory_limit = {{ memory_limit }}' }
-        - { reg: 'display_errors =', line: 'display_errors = true' }
-        - { reg: 'display_startup_errors =', line: 'display_startup_errors = true' }
-        - { reg: 'error_reporting =', line: 'error_reporting = E_ALL' }
+    with_items: php_ini_settings
 
 
 - name: Install Apache fcgid

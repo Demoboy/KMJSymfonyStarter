@@ -1,4 +1,5 @@
 require_relative 'vagrantvars.rb'
+require "ipaddr"
 include VagrantVars
 
 unless Vagrant.has_plugin?("vagrant-vbguest")
@@ -48,12 +49,12 @@ Vagrant.configure("2") do |config|
       cpus = `sysctl -n hw.ncpu`.to_i
       # sysctl returns Bytes and we need to convert to MB
       mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 4
-    elsif host =~ /linux/ or Vagrant::Util::Platform.windows?
+    elsif host =~ /linux/ 
       cpus = `nproc`.to_i
       # meminfo shows KB and we need to convert to MB
       mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
     else
-      cpus = 2
+      cpus = 8
       mem = 1024
     end
 
@@ -99,12 +100,16 @@ Vagrant.configure("2") do |config|
 
     if !Vagrant::Util::Platform.windows?
       dev.vm.provision "lamp", type: "ansible" do |lamp|
+        ipArray = DEV_IP_ADDRESS.split(".");
+        ipArray[-1] = "1";
+
         lamp.extra_vars = {
           enviroment: "dev",
           servername: HOST_NAME + ".dev",
           database_name: DATABASE_NAME,
           database_user: DATABASE_USER,
           database_password: DATABASE_PASSWORD,
+          xdebug_ip: ipArray.join("."),
         }
       end
 
@@ -134,12 +139,16 @@ Vagrant.configure("2") do |config|
 
     if !Vagrant::Util::Platform.windows?
       test.vm.provision "lamp", type: "ansible" do |lamp|
+       ipArray = DEV_IP_ADDRESS.split(".");
+        ipArray[-1] = "1";
+
         lamp.extra_vars = {
           enviroment: "test",
           servername: HOST_NAME + ".test",
           database_name: DATABASE_NAME,
           database_user: DATABASE_USER,
           database_password: DATABASE_PASSWORD,
+          xdebug_ip: ipArray.join("."),
         }
       end
 
@@ -174,12 +183,16 @@ Vagrant.configure("2") do |config|
 
     if !Vagrant::Util::Platform.windows?
       prod.vm.provision "lamp", type: "ansible" do |lamp|
+        ipArray = DEV_IP_ADDRESS.split(".");
+        ipArray[-1] = "1";
+
         lamp.extra_vars = {
           enviroment: "prod",
           servername: HOST_NAME + ".prod",
           database_name: DATABASE_NAME,
           database_user: DATABASE_USER,
           database_password: DATABASE_PASSWORD,
+          xdebug_ip: ipArray.join("."),
         }
       end
 
