@@ -29,12 +29,3 @@
   command: pear install phpdoc/phpDocumentor
   args:
       creates: /usr/bin/phpdoc
-      
--   name: Check phpunit installation
-    action: shell test /usr/local/bin/phpunit && echo "exists" || echo ""
-    register: fileCheck
-
--   name: Download PHPUnit
-    when: fileCheck.stdout.find("exists") != -1
-    get_url: url=https://phar.phpunit.de/phpunit.phar
-             dest=/usr/local/bin/phpunit

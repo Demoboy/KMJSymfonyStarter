@@ -12,4 +12,8 @@
 /nbproject/private/
 .vagrant
 /web/.htaccess
-.DS_Store
+/web/js/compiled/
+/web/css/compiled/
+/web/uploads/
+/app/Resources/protectedUploads/
+/docs/

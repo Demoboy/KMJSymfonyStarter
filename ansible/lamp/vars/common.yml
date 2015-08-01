@@ -1,11 +1,12 @@
 ---
-    wkhtmltopdf_url: http://iweb.dl.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+    wkhtmltopdf_url: http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
     php_ppa: php5-5.6
     doc_root: /vagrant/web
     sys_packages: [
         "git",
         "nodejs",
-        "npm"
+        "npm",
+        "graphviz"
     ]
     php_packages: [
         "php5-cli",
@@ -15,7 +16,8 @@
         "php5-mcrypt",
         "php5-imagick",
         "php5-xdebug",
-        "php5-mysql"
+        "php5-mysql",
+        "phpunit"
     ]
     php_ini_settings: [
         { reg: 'date.timezone =', line: 'date.timezone = {{ timezone }}' },
@@ -25,6 +27,7 @@
         { reg: 'display_errors =', line: 'display_errors = true' },
         { reg: 'display_startup_errors =', line: 'display_startup_errors = true' },
         { reg: 'error_reporting =', line: 'error_reporting = E_ALL' },
+        { reg: 'session.gc_maxlifetime =', line: 'session.gc_maxlifetime = 3600' },
         { reg: 'xdebug.remote_enable =', line: 'xdebug.remote_enable = 1' },
         { reg: 'xdebug.remote_handler =', line: 'xdebug.remote_handler = dbgp' },
         { reg: 'xdebug.remote_mode =', line: 'xdebug.remote_mode = req' },

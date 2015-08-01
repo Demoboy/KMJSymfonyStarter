@@ -1,0 +1,8 @@
+-   name: Install supervisor
+    sudo: yes
+    apt: pkg=supervisor state=latest
+        
+-   name: Setup basic config for JMSQueueBundle
+    sudo: yes
+    template: src=supervisord.conf.tpl dest=/etc/supervisor/conf.d/{{ servername }}_job_queue_runner.conf
+    notify: restart supervisor
