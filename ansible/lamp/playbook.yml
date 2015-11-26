@@ -3,12 +3,11 @@
   sudo: true
   vars:
     web_server: apachephp
-    timezone: UTC
+    timezone: America/Phoenix
     max_nesting_level: 300
     memory_limit: 512M
   vars_files:
-    - vars/common.yml
-    - [ "vars/apachephp.yml", "vars/ws_defaults.yml" ]
+    - [ "vars/{{ enviroment }}_vars.yml", "vars/common.yml" ]
   roles:
     - init
     - php5-cli
@@ -20,7 +19,8 @@
     - phpcommon
     - node
     - wkhtmltopdf
-    - phpmyadmin
-    #- supervisor
-    #- vim
+    - { role: phpmyadmin, when: "enviroment == 'dev' or enviroment == 'test'" }
+    - jackrabbit
+    - supervisor
+#    - vim
     - bash

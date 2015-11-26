@@ -16,20 +16,29 @@
 
 - name: Change default apache2.4 site
   sudo: yes
-  template: src=vhost24.conf.tpl dest=/etc/apache2/sites-available/000-default.conf
+  template: src=vhost24.conf.tpl dest=/etc/apache2/sites-available/{{ ws_vhost_file }}.conf
   notify: restart apache
-
+  
+- name: Disable default site
+  sudo: yes
+  command: a2dissite 000-default.conf
+  notify: restart apache
+  
+- name: Enable site
+  sudo: yes
+  command: a2ensite {{ ws_vhost_file }}
+  notify: restart apache
     
--   name: Change apache user to vagrant
+-   name: Change apache user to {{ user }}
     notify: restart apache
     lineinfile: dest=/etc/apache2/envvars
                 regexp='export APACHE_RUN_USER=www-data'
-                line='export APACHE_RUN_USER=vagrant'
+                line='export APACHE_RUN_USER={{ user }}'
                 
--   name: Change apache group to vagrant
+-   name: Change apache group to {{ user }}
     lineinfile: dest=/etc/apache2/envvars
                 regexp='export APACHE_RUN_GROUP=www-data'
-                line='export APACHE_RUN_GROUP=vagrant'
+                line='export APACHE_RUN_GROUP={{ user }}'
     notify: restart apache
         
 -   name: Create SSL key folder

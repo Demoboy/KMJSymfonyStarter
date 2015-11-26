@@ -5,8 +5,7 @@
         "git",
         "nodejs",
         "npm",
-        "graphviz",
-        "pdftk"
+        "graphviz"
     ]
     php_packages: [
         "php5-cli",
@@ -31,14 +30,9 @@
         { reg: 'date.timezone =', line: 'date.timezone = {{ timezone }}' },
         { reg: 'max_execution_time =', line: 'max_execution_time = 0' },
         { reg: 'xdebug.max_nesting_level =', line: 'xdebug.max_nesting_level = {{ max_nesting_level }}' },
-        { reg: 'memory_limit =', line: 'memory_limit = {{ memory_limit }}' },
-        { reg: 'display_errors =', line: 'display_errors = true' },
-        { reg: 'display_startup_errors =', line: 'display_startup_errors = true' },
+        { reg: 'memory_limit =', line: 'memory_limit = 256M' },
+        { reg: 'display_errors =', line: 'display_errors = false' },
+        { reg: 'display_startup_errors =', line: 'display_startup_errors = false' },
         { reg: 'error_reporting =', line: 'error_reporting = E_ALL' },
-        { reg: 'session.gc_maxlifetime =', line: 'session.gc_maxlifetime = 3600' },
-        { reg: 'xdebug.remote_enable =', line: 'xdebug.remote_enable = 1' },
-        { reg: 'xdebug.remote_handler =', line: 'xdebug.remote_handler = dbgp' },
-        { reg: 'xdebug.remote_mode =', line: 'xdebug.remote_mode = req' },
-        { reg: 'xdebug.remote_host =', line: 'xdebug.remote_host = {{ xdebug_ip }}' },
-        { reg: 'xdebug.remote_port =', line: 'xdebug.remote_port = 9001' }
+        { reg: 'session.gc_maxlifetime =', line: 'session.gc_maxlifetime = 3600' }
     ]

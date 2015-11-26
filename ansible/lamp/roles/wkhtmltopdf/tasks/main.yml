@@ -1,13 +1,14 @@
 -   name: Check wkhtmltopdf download
-    action: shell test /tmp/wkhtmltopdf.deb && echo "exists" || echo ""
-    register: fileCheck
+    stat: path=/usr/local/bin/wkhtmltopdf
+    register: wkhtmltopdf_install
    
--   name: download wkhtmltopdf
+-   name: Download wkhtmltopdf
     register: wkhtmltopdf
-    when: fileCheck.stdout.find("exists") != -1
+    when: wkhtmltopdf_install.stat.exists == False
     get_url: url={{ wkhtmltopdf_url }}
              dest=/tmp/wkhtmltopdf.deb
    
--   name: install wkhtmltopdf
-    when: wkhtmltopdf|success
+-   name: Install wkhtmltopdf
+    when: wkhtmltopdf_install.stat.exists == False
     apt: deb=/tmp/wkhtmltopdf.deb
+   

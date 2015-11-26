@@ -106,6 +106,7 @@ Vagrant.configure("2") do |config|
         lamp.extra_vars = {
           enviroment: "dev",
           servername: HOST_NAME + ".dev",
+          doc_root: "/vagrant/web",
           database_name: DATABASE_NAME,
           database_user: DATABASE_USER,
           database_password: DATABASE_PASSWORD,
@@ -145,6 +146,7 @@ Vagrant.configure("2") do |config|
         lamp.extra_vars = {
           enviroment: "test",
           servername: HOST_NAME + ".test",
+          doc_root: "/vagrant/web",
           database_name: DATABASE_NAME,
           database_user: DATABASE_USER,
           database_password: DATABASE_PASSWORD,
@@ -189,6 +191,7 @@ Vagrant.configure("2") do |config|
         lamp.extra_vars = {
           enviroment: "prod",
           servername: HOST_NAME + ".prod",
+          doc_root: "/vagrant/web",
           database_name: DATABASE_NAME,
           database_user: DATABASE_USER,
           database_password: DATABASE_PASSWORD,

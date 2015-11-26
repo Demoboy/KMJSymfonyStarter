@@ -4,7 +4,7 @@
   
 - name: use FPM
   sudo: yes
-  template: src=vhost24fpm.conf.tpl dest=/etc/apache2/sites-available/000-default.conf
+  template: src=vhost24fpm.conf.tpl dest=/etc/apache2/sites-available/{{ ws_vhost_file }}.conf
   notify: 
     - restart apache
     - restart php-fpm
