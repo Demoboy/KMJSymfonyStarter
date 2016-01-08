@@ -1,0 +1,11 @@
+- name: Install php7
+  sudo: yes
+  apt: pkg=php7.0 state=latest
+
+-   name: Setup php.ini
+    sudo: yes
+    lineinfile: dest="/etc/php/7.0/apache2/php.ini"
+                regexp="{{ item.reg }}"
+                line="{{ item.line }}"
+    with_items: php_ini_settings
+    

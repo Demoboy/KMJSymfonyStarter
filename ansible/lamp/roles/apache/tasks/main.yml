@@ -24,6 +24,10 @@
   command: a2dissite 000-default.conf
   notify: restart apache
   
+-   name: Change owner of apache lib files
+    sudo: yes
+    command: chown -R {{ user }} /var/lib/apache2/
+    
 - name: Enable site
   sudo: yes
   command: a2ensite {{ ws_vhost_file }}

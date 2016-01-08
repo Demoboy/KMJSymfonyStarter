@@ -10,7 +10,6 @@
                 line="{{ item.line }}"
     with_items: php_ini_settings
 
-
 - name: Install Apache fcgid
   sudo: yes
   apt: pkg=libapache2-mod-fcgid state=latest

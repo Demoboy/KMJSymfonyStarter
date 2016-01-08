@@ -6,9 +6,8 @@
     {{ tools.phpmyadmin() }}
     {% endif %}
     
-    <FilesMatch \.php$>
-        SetHandler proxy:fcgi://127.0.0.1:9000
-    </FilesMatch>
+    ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000{{ doc_root }}/$1
+
 </VirtualHost>
         
 <VirtualHost *:443>
@@ -18,8 +17,7 @@
     {% endif %}
     {{ tools.ssl(servername) }}
     
-    <FilesMatch \.php$>
-        SetHandler proxy:fcgi://127.0.0.1:9000
-    </FilesMatch>
+    ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000{{ doc_root }}/$1
+
 </VirtualHost>
     

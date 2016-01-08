@@ -1,6 +1,12 @@
-- name: Add ppa Repository
+- name: Add php7 Repository
   sudo: yes
-  apt_repository: repo=ppa:ondrej/{{ php_ppa }}
+  when: php_ver == 7
+  apt_repository: repo=ppa:ondrej/{{ php_7_ppa }}
+    
+- name: Add php5 Repository
+  sudo: yes
+  when: php_ver == 5
+  apt_repository: repo=ppa:ondrej/{{ php_5_ppa }}
     
 - name: Update apt
   sudo: yes

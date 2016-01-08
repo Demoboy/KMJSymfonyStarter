@@ -2,7 +2,6 @@
 - hosts: all
   sudo: true
   vars:
-    web_server: apachephp
     timezone: America/Phoenix
     max_nesting_level: 300
     memory_limit: 512M
@@ -10,17 +9,21 @@
     - [ "vars/{{ enviroment }}_vars.yml", "vars/common.yml" ]
   roles:
     - init
-    - php5-cli
+#    - php5-cli
+    - php7-cli
     - apache
-    - php5
-    - php-fpm
+#    - php5
+#    - php5-fpm
+    - php7
+    - php7-fpm
     - mysql
     - composer
-    - phpcommon
+#    - php5common
+    - php7common
     - node
     - wkhtmltopdf
-    - { role: phpmyadmin, when: "enviroment == 'dev' or enviroment == 'test'" }
-    - jackrabbit
+#    - { role: phpmyadmin, when: "enviroment == 'dev' or enviroment == 'test'" }
+#    - jackrabbit
     - supervisor
 #    - vim
     - bash

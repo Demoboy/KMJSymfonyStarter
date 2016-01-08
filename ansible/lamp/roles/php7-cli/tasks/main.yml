@@ -1,10 +1,10 @@
-- name: Install php5-cli
+- name: Install php7-cli
   sudo: yes
-  apt: pkg=php5-cli state=latest
+  apt: pkg=php7.0-cli state=latest
 
 -   name: Setup php.ini
     sudo: yes
-    lineinfile: dest="/etc/php5/cli/php.ini"
+    lineinfile: dest="/etc/php/7.0/cli/php.ini"
                 regexp="{{ item.reg }}"
                 line="{{ item.line }}"
     with_items: php_ini_settings
