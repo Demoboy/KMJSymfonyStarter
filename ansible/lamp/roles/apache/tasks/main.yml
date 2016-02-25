@@ -1,37 +1,37 @@
 ---
-- name: Install Apache
-  sudo: yes
-  apt: pkg=apache2 state=latest
+-   name: Install Apache
+    become: yes
+    apt: pkg=apache2 state=latest
 
-- name: Install Apache Modules
-  apache2_module: state=present name={{ item }}
-  notify: restart apache
-  with_items:
-    - rewrite
-    - vhost_alias
-    - headers
-    - expires
-    - filter
-    - ssl
+-   name: Install Apache Modules
+    apache2_module: state=present name={{ item }}
+    notify: restart apache
+    with_items:
+        - rewrite
+        - vhost_alias
+        - headers
+        - expires
+        - filter
+        - ssl
 
-- name: Change default apache2.4 site
-  sudo: yes
-  template: src=vhost24.conf.tpl dest=/etc/apache2/sites-available/{{ ws_vhost_file }}.conf
-  notify: restart apache
+-   name: Change default apache2.4 site
+    become: yes
+    template: src=vhost24.conf.tpl dest=/etc/apache2/sites-available/{{ ws_vhost_file }}.conf
+    notify: restart apache
   
-- name: Disable default site
-  sudo: yes
-  command: a2dissite 000-default.conf
-  notify: restart apache
+-   name: Disable default site
+    become: yes
+    command: a2dissite 000-default.conf
+    notify: restart apache
   
 -   name: Change owner of apache lib files
-    sudo: yes
-    command: chown -R {{ user }} /var/lib/apache2/
+    become: yes
+    file: path=/var/lib/apache2/ owner={{ user }} recurse=yes
     
-- name: Enable site
-  sudo: yes
-  command: a2ensite {{ ws_vhost_file }}
-  notify: restart apache
+-   name: Enable site
+    become: yes
+    command: a2ensite {{ ws_vhost_file }}
+    notify: restart apache
     
 -   name: Change apache user to {{ user }}
     notify: restart apache
@@ -46,14 +46,27 @@
     notify: restart apache
         
 -   name: Create SSL key folder
-    sudo: yes
+    become: yes
     file: path="/etc/apache2/ssl"
           state="directory"
           owner="root"
     
 -   name: Generate SSL Key
-    sudo: yes
+    become: yes
     command: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/{{servername}}.key -out /etc/apache2/ssl/{{servername}}.crt -subj '/CN={{servername}}/O=Vagrant VM/C=US'
     notify: restart apache
     args:
         creates: /etc/apache2/ssl/{{servername}}.key
+
+-   name: Get mod_pagespeed
+    get_url: url=https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
+             dest=/tmp/pagespeed.deb
+             
+-   name: Install mod_pagespeed
+    apt: deb=/tmp/pagespeed.deb
+     
+-   name: Fix pagespeed cache permissions
+    file: path=/var/cache/mod_pagespeed owner={{ user }} recurse=yes
+    
+-   name: Fix pagespeed log permissions
+    file: path=/var/log/pagespeed owner={{ user }} recurse=yes

@@ -26,6 +26,8 @@ Vagrant.configure("2") do |config|
     lamp.limit = 'all'
   end
 
+
+
   config.vm.provision "setup", type: "ansible", run: "always" do |setup|
     setup.playbook = "ansible/setup/playbook.yml"
     setup.limit = 'all'
@@ -62,6 +64,7 @@ Vagrant.configure("2") do |config|
 
       config.ssh.forward_agent = true
       config.vm.synced_folder '.', '/vagrant', nfs: true
+      config.vm.synced_folder '~/.ssh', '/home/vagrant/host_ssh', nfs: true
         
       config.vm.provider :virtualbox do |virtualbox|
         host = RbConfig::CONFIG['host_os']
@@ -136,6 +139,9 @@ Vagrant.configure("2") do |config|
         xdebug_ip: ipArray.join("."),
       }
     end
+
+    config.vm.provision :shell, run: "always",
+        :inline => "sudo -i -u vagrant cp /home/vagrant/host_ssh/* /home/vagrant/.ssh/ && chmod 600 /home/vagrant/.ssh/*"
 
     dev.vm.provision "setup", type: "ansible" do |setup|
       setup.extra_vars = {

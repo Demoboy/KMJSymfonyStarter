@@ -1,16 +1,16 @@
 -   name: Install PHP Packages
-    sudo: yes
+    become: yes
     apt: pkg={{ item }} state=latest
     with_items: php_5_packages
   
 -   name: Install phpcs
-    sudo: yes
+    become: yes
     command: pear install PHP_CodeSniffer
     args:
       creates: /usr/bin/phpcs
   
 -   name: Install pear channels
-    sudo: yes
+    become: yes
     command: pear channel-discover {{ item }}
     ignore_errors: yes
     with_items:
@@ -19,18 +19,18 @@
          - pear.phpdoc.org
 
 -   name: Install PHP Mess Detector
-    sudo: yes
+    become: yes
     command: pear install phpmd/PHP_PMD
     args:
         creates: /usr/bin/phpmd
   
 -   name: Install PHPDocumentor
-    sudo: yes
+    become: yes
     command: pear install phpdoc/phpDocumentor
     args:
         creates: /usr/bin/phpdoc
       
 -   name: Remove xdebug from CLI
-    sudo: yes
+    become: yes
     ignore_errors: yes
-    command: rm /etc/php5/cli/conf.d/20-xdebug.ini
+    file: path=/etc/php/5.6/cli/conf.d/20-xdebug.ini state=absent force=yes

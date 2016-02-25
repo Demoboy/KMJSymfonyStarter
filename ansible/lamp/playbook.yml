@@ -1,7 +1,8 @@
 ---
 - hosts: all
-  sudo: true
+  become: true
   vars:
+    web_server: apachephp
     timezone: America/Phoenix
     max_nesting_level: 300
     memory_limit: 512M
@@ -16,7 +17,7 @@
 #    - php5-fpm
     - php7
     - php7-fpm
-    - mysql
+    - { role: mysql, when: "enviroment == 'dev' or enviroment == 'test'" }
     - composer
 #    - php5common
     - php7common
@@ -24,6 +25,6 @@
     - wkhtmltopdf
 #    - { role: phpmyadmin, when: "enviroment == 'dev' or enviroment == 'test'" }
 #    - jackrabbit
-    - supervisor
+#    - supervisor
 #    - vim
     - bash

@@ -9,7 +9,8 @@
         - { reg: 'export PATH=$HOME/.composer/vendor/bin/:$PATH', line: 'export PATH=$HOME/.composer/vendor/bin/:$PATH' }
 
 -   name: Change bash up and down arrow function
-    sudo: yes
+    become: yes
+    become_user: "{{ user }}"
     lineinfile: dest="/home/{{ user }}/.inputrc"
                 create=yes
                 regexp="{{ item.reg }}"

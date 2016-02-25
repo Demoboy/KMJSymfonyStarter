@@ -1,9 +1,9 @@
-- name: Install php7-cli
-  sudo: yes
-  apt: pkg=php7.0-cli state=latest
+-   name: Install php7-cli
+    become: yes
+    apt: pkg=php7.0-cli state=latest
 
 -   name: Setup php.ini
-    sudo: yes
+    become: yes
     lineinfile: dest="/etc/php/7.0/cli/php.ini"
                 regexp="{{ item.reg }}"
                 line="{{ item.line }}"

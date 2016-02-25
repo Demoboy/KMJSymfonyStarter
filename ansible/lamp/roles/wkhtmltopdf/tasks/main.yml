@@ -3,7 +3,6 @@
     register: wkhtmltopdf_install
    
 -   name: Download wkhtmltopdf
-    register: wkhtmltopdf
     when: wkhtmltopdf_install.stat.exists == False
     get_url: url={{ wkhtmltopdf_url }}
              dest=/tmp/wkhtmltopdf.deb

@@ -1,7 +1,5 @@
 ---
     wkhtmltopdf_url: http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
-    php_5_ppa: php5-5.6
-    php_7_ppa: php-7.0
     sys_packages: [
         "git",
         "nodejs",
@@ -12,20 +10,27 @@
 #        "phpunit"
     ]
     php_5_packages: [
-        "php5-cli",
-        "php5-gd",
-        "php-pear",
-        "php5-curl",
-        "php5-intl",
-        "php5-mcrypt",
-        "php5-imagick",
-        "php5-xdebug",
-        "php5-mysql",
-        "php5-memcached"
+        "php5.6-cli",
+        "php5.6-cli",
+        "php5.6-zip",
+        "php5.6-xml",
+        "php5.6-gd",
+        "php5.6-pear",
+        "php5.6-curl",
+        "php5.6-intl",
+        "php5.6-mcrypt",
+        "php5.6-mbstring",
+        "php5.6-imagick",
+        "php5.6-xdebug",
+        "php5.6-mysql",
+        "php5.6-memcached"
     ]
     php_7_packages: [
         "php7.0-cli",
+        "php7.0-zip",
+        "php7.0-xml",
         "php7.0-gd",
+        "php7.0-mbstring",
         "php-pear",
         "php7.0-curl",
         "php7.0-intl",
@@ -35,7 +40,6 @@
         "php7.0-mysql",
         "php-memcached"
     ]
-    php_ver: 7
     ws_vhost_path: /etc/apache2/sites-available
     ws_vhost_file: default
     ws_template: vhost.conf.tpl

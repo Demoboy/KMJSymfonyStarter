@@ -1,13 +1,13 @@
 -   name: Add java ppa repo
-    sudo: yes
+    become: yes
     apt_repository: repo=ppa:webupd8team/java
     
 -   name: auto accept oracle jdk license
     shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-    sudo: yes    
+    become: yes    
 
 -   name: Install java
-    sudo: yes
+    become: yes
     apt: pkg={{ item }} state=latest
     with_items:
       - oracle-java8-installer
@@ -18,22 +18,26 @@
     register: jackrabbit_install
     
 -   name: download jackrabbit
-    sudo: yes
+    become: yes
     get_url: url=http://www.carfab.com/apachesoftware/jackrabbit/{{ jackrabbit_ver }}/jackrabbit-standalone-{{ jackrabbit_ver }}.jar dest=/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar 
     when: jackrabbit_install.stat.exists == False
     
 -   name: Add startup script 
-    sudo: yes
+    become: yes
     template: src=jack.tpl dest=/opt/jackrabbit.sh
     
--   name: Make execuable
-    sudo: yes
-    command: chmod +x /opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar /opt/jackrabbit.sh
+-   name: Make jackrabbit jar execuable
+    become: yes
+    file: path=/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar mode=u+rwx
+
+-   name: Make jackrabbit sh execuable
+    become: yes
+    file: path=/opt/jackrabbit.sh mode=u+rwx
     
 -   name: Add to init.d
-    sudo: yes
+    become: yes
     ignore_errors: yes
-    command: ln -s /opt/jackrabbit.sh /etc/init.d/jackrabbit
+    file: src=/opt/jackrabbit.sh dest=/etc/init.d/jackrabbit state=link force=yes
     
 -   name: Start jackrabbit
     service: name=jackrabbit enabled=yes state=restarted

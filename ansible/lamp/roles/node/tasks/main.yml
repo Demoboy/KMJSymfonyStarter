@@ -1,16 +1,14 @@
-- name: Install node and npm
-  sudo: yes
-  apt: pkg={{ item }} state=latest
-  with_items:
-    - nodejs
-    - npm
+-   name: Install node and npm
+    become: yes
+    apt: pkg={{ item }} state=latest
+    with_items:
+        - nodejs
+        - npm
 
-- name: link nodejs to node 
-  sudo: yes
-  command: ln -s /usr/bin/nodejs /usr/bin/node
-  args:
-    creates: /usr/bin/node
+-   name: link nodejs to node 
+    become: yes
+    file: src=/usr/bin/nodejs dest=/usr/bin/node state=link force=yes
   
-- name: install uglify css/js and less
-  sudo: yes
-  command: npm install -g uglifycss uglify-js@2.4.15 less@1.7.5
+-   name: install uglify css/js and less
+    become: yes
+    command: npm install -g uglifycss uglify-js@2.4.15 less@1.7.5

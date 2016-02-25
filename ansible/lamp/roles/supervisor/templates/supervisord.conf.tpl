@@ -7,5 +7,5 @@ autostart=true
 autorestart=true
 startsecs=5
 startretries=10
-user=vagrant
+user={{ user }}
 redirect_stderr=false

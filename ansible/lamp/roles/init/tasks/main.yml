@@ -1,57 +1,53 @@
-- name: Add php7 Repository
-  sudo: yes
-  when: php_ver == 7
-  apt_repository: repo=ppa:ondrej/{{ php_7_ppa }}
+-   name: Add php Repository
+    become: yes
+    apt_repository: repo=ppa:ondrej/php
     
-- name: Add php5 Repository
-  sudo: yes
-  when: php_ver == 5
-  apt_repository: repo=ppa:ondrej/{{ php_5_ppa }}
+-   name: Update apt
+    become: yes
+    apt: update_cache=yes
+  
+-   name: Install aptitude
+    command: apt-get install aptitude --yes
+    become: yes
+  
+-   name: Upgrade OS
+    become: yes
+    apt: upgrade=yes
+
+-   name: Install System Packages
+    become: yes
+    apt: pkg={{ item }} state=latest
+    with_items:
+        - curl
+        - wget
+        - nano
+        - python-software-properties
+
+-   name: Install Extra Packages
+    become: yes
+    apt: pkg={{ item }} state=latest
+    with_items: sys_packages
+
+-   name: Configure the timezone
+    become: yes
+    template: src=timezone.tpl dest=/etc/timezone
+
+-   name: More Configure the timezone
+    become: yes
+    file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
+
+-   name: add hostname to hosts file
+    become: yes
+    lineinfile: dest=/etc/hosts line='::1   {{ servername }}' 
+
+-   name: Setup locale
+    command: locale-gen en_US.UTF-8 
     
-- name: Update apt
-  sudo: yes
-  apt: update_cache=yes
-  
-- name: Install aptitude
-  command: apt-get install aptitude --yes
-  sudo: yes
-  
-- name: Upgrade OS
-  sudo: yes
-  apt: upgrade=yes
-  
-- name: Install System Packages
-  sudo: yes
-  apt: pkg={{ item }} state=latest
-  with_items:
-    - curl
-    - wget
-    - nano
-    - python-software-properties
-
-- name: Install Extra Packages
-  sudo: yes
-  apt: pkg={{ item }} state=latest
-  with_items: sys_packages
-
-- name: Configure the timezone
-  sudo: yes
-  template: src=timezone.tpl dest=/etc/timezone
-
-- name: More Configure the timezone
-  sudo: yes
-  file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
-
-- name: add hostname to hosts file
-  sudo: yes
-  lineinfile: dest=/etc/hosts line='::1   {{ servername }}' 
-
-- name: Setup locale
-  command: locale-gen en_US.UTF-8 
-- command: dpkg-reconfigure locales 
-  environment:
-    LANGUAGE: en_US.UTF-8
-    LANG: en_US.UTF-8
-    LC_ALL: en_US.UTF-8
+-   name: Reconfigure Dpkg locales
+    command: dpkg-reconfigure locales 
+    environment:
+        LANGUAGE: en_US.UTF-8
+        LANG: en_US.UTF-8
+        LC_ALL: en_US.UTF-8
 
   

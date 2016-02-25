@@ -1,10 +1,10 @@
-- name: Install php5
-  sudo: yes
-  apt: pkg=php5 state=latest
+-   name: Install php5
+    become: yes
+    apt: pkg=php5.6 state=latest
 
 -   name: Setup php.ini
-    sudo: yes
-    lineinfile: dest="/etc/php5/apache2/php.ini"
+    become: yes
+    lineinfile: dest="/etc/php/5.6/apache2/php.ini"
                 regexp="{{ item.reg }}"
                 line="{{ item.line }}"
     with_items: php_ini_settings
