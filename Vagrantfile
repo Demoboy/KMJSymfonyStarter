@@ -138,7 +138,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.provision :shell, run: "always",
-        :inline => "sudo -i -u vagrant cp -R /home/vagrant/host_ssh/* /home/vagrant/.ssh/ && chmod 600 /home/vagrant/.ssh/*"
+        :inline => "sudo -i -u vagrant cp -R /home/vagrant/host_ssh/* /home/vagrant/.ssh/ && chmod 700 /home/vagrant/.ssh/*"
 
     dev.vm.provision "setup", type: "ansible" do |setup|
       setup.extra_vars = {
