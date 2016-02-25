@@ -20,13 +20,10 @@ Vagrant.configure("2") do |config|
     provider = (ENV['VAGRANT_DEFAULT_PROVIDER'] || :virtualbox).to_sym
   end
 
-
   config.vm.provision "lamp", type: "ansible" do |lamp|
     lamp.playbook = "ansible/lamp/playbook.yml"
     lamp.limit = 'all'
   end
-
-
 
   config.vm.provision "setup", type: "ansible", run: "always" do |setup|
     setup.playbook = "ansible/setup/playbook.yml"
@@ -141,7 +138,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.provision :shell, run: "always",
-        :inline => "sudo -i -u vagrant cp /home/vagrant/host_ssh/* /home/vagrant/.ssh/ && chmod 600 /home/vagrant/.ssh/*"
+        :inline => "sudo -i -u vagrant cp -R /home/vagrant/host_ssh/* /home/vagrant/.ssh/ && chmod 600 /home/vagrant/.ssh/*"
 
     dev.vm.provision "setup", type: "ansible" do |setup|
       setup.extra_vars = {
