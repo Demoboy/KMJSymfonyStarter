@@ -1,12 +1,11 @@
----
     wkhtmltopdf_url: http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
     sys_packages: [
         "git",
         "nodejs",
         "npm",
         "graphviz",
-        "pdftk",
-        "memcached"
+#        "pdftk",
+#        "memcached"
 #        "phpunit"
     ]
     php_5_packages: [
@@ -23,7 +22,7 @@
         "php5.6-imagick",
         "php5.6-xdebug",
         "php5.6-mysql",
-        "php5.6-memcached"
+#        "php5.6-memcached"
     ]
     php_7_packages: [
         "php7.0-cli",
@@ -38,7 +37,7 @@
         "php-imagick",
         "php-xdebug",
         "php7.0-mysql",
-        "php-memcached"
+#        "php-memcached"
     ]
     ws_vhost_path: /etc/apache2/sites-available
     ws_vhost_file: default
@@ -60,6 +59,8 @@
         { reg: 'xdebug.remote_mode =', line: 'xdebug.remote_mode = req' },
         { reg: 'xdebug.remote_host =', line: 'xdebug.remote_host = {{ xdebug_ip }}' },
         { reg: 'xdebug.remote_port =', line: 'xdebug.remote_port = 9001' }
+        { reg: 'upload_max_filesize =', line: 'upload_max_filesize = 10M' }
+        { reg: 'post_max_size =', line: 'session.gc_maxlifetime = 80M' }
     ]
    
     

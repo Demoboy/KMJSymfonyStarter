@@ -25,7 +25,8 @@
         - proxy_fcgi
         - fcgid
     
--   name: Setup fpm config
+-   name: Setup php-fpm config
+    when: enviroment == 'dev'
     lineinfile: dest=/etc/php/7.0/fpm/php-fpm.conf
             create=no
             regexp="{{ item.reg }}"
@@ -33,4 +34,16 @@
     with_items:
         - { reg: 'user = ', line: "user = {{ user }}"}
         - { reg: 'group = ', line: 'group = {{ user }}'}
-        - { reg: 'listen = ', line: 'listen = 127.0.0.1:9000' } 
+        
+-   name: Setup default pool
+    when: enviroment == 'dev'
+    lineinfile: dest=/etc/php/7.0/fpm/pool.d/www.conf
+            create=no
+            regexp="{{ item.reg }}"
+            line="{{ item.line }}"
+    with_items:
+        - { reg: 'listen.owner = ', line: 'listen.owner = {{ user }}'}
+        - { reg: 'listen.group = ', line: 'listen.group = {{ user }}'}
+        - { reg: 'user = ', line: "user = {{ user }}"}
+        - { reg: 'group = ', line: 'group = {{ user }}'}
+

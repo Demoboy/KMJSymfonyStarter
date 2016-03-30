@@ -8,18 +8,18 @@
 
 -   name: Install java
     become: yes
-    apt: pkg={{ item }} state=latest
+    apt: pkg="{{ item }}" state=latest
     with_items:
       - oracle-java8-installer
       - oracle-java7-installer
       
 -   name: Check jackrabbit install
-    stat: path=/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar
+    stat: path="/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar"
     register: jackrabbit_install
     
 -   name: download jackrabbit
     become: yes
-    get_url: url=http://www.carfab.com/apachesoftware/jackrabbit/{{ jackrabbit_ver }}/jackrabbit-standalone-{{ jackrabbit_ver }}.jar dest=/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar 
+    get_url: url="http://www.carfab.com/apachesoftware/jackrabbit/{{ jackrabbit_ver }}/jackrabbit-standalone-{{ jackrabbit_ver }}.jar" dest="/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar" 
     when: jackrabbit_install.stat.exists == False
     
 -   name: Add startup script 
@@ -28,7 +28,7 @@
     
 -   name: Make jackrabbit jar execuable
     become: yes
-    file: path=/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar mode=u+rwx
+    file: path="/opt/jackrabbit-standalone-{{ jackrabbit_ver }}.jar" mode=u+rwx
 
 -   name: Make jackrabbit sh execuable
     become: yes

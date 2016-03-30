@@ -1,6 +1,6 @@
 -   name: Install node and npm
     become: yes
-    apt: pkg={{ item }} state=latest
+    apt: pkg="{{ item }}" state=latest
     with_items:
         - nodejs
         - npm

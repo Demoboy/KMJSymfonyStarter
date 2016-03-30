@@ -1,12 +1,12 @@
 -   name: Debconf for MySQL
-    debconf: name=mysql-server-5.6 question={{ item.question }} value={{ item.value }} vtype={{ item.vtype }}
+    debconf: name=mysql-server-5.6 question="{{ item.question }}" value="{{ item.value }}" vtype="{{ item.vtype }}"
     with_items:
         - { question: "mysql-server/root_password", value: "{{ database_password }}", vtype: "password"}
         - { question: "mysql-server/root_password_again", value: "{{ database_password }}", vtype: "password"}
       
 -   name: Install MySQL Packages
     become: yes
-    apt: pkg={{ item }} state=latest force=yes
+    apt: pkg="{{ item }}" state=latest force=yes
     with_items:
         - mysql-server-5.6
         - mysql-client-5.6
@@ -15,11 +15,11 @@
 -   name: Create databases
     become: yes
     ignore_errors: yes
-    mysql_db: name={{ database_name }} state=present login_user=root login_password={{ database_password }}
+    mysql_db: name="{{ database_name }}" state=present login_user=root login_password="{{ database_password }}"
     with_items: mysql
 
 -   name: Create users
     become: yes
     ignore_errors: yes
-    mysql_user: name={{ database_user }} password={{ database_password }} priv={{ database_name }}.*:ALL state=present login_user=root login_password={{ database_password }}
+    mysql_user: name="{{ database_user }}" password="{{ database_password }}" priv="{{ database_name }}.*:ALL" state=present login_user=root login_password="{{ database_password }}"
     with_items: mysql

@@ -16,7 +16,7 @@
 
 -   name: Install System Packages
     become: yes
-    apt: pkg={{ item }} state=latest
+    apt: pkg="{{ item }}" state=latest
     with_items:
         - curl
         - wget
@@ -25,8 +25,8 @@
 
 -   name: Install Extra Packages
     become: yes
-    apt: pkg={{ item }} state=latest
-    with_items: sys_packages
+    apt: pkg='{{ item }}' state=latest
+    with_items: '{{ sys_packages }}'
 
 -   name: Configure the timezone
     become: yes
@@ -34,7 +34,7 @@
 
 -   name: More Configure the timezone
     become: yes
-    file: src=/usr/share/zoneinfo/{{timezone}} dest=/etc/localtime state=link force=yes backup=yes
+    file: src="/usr/share/zoneinfo/{{timezone}}" dest=/etc/localtime state=link force=yes backup=yes
 
 -   name: add hostname to hosts file
     become: yes

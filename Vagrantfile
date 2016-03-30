@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
           # sysctl returns Bytes and we need to convert to MB
           mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 4
         elsif host =~ /linux/ 
-          cpus = `nproc`.to_i
+          cpus = `nproc`.to_i / 2
           # meminfo shows KB and we need to convert to MB
           mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
         else
@@ -115,6 +115,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "dev", primary: true do |dev|
     dev.vm.network :private_network, ip: IP_ADDRESS
+    config.vm.network :forwarded_port, guest: 80, host: 4567, auto_correct: true
     dev.vm.hostname = DEV_HOST_NAME
 
     dev.vm.provider :virtualbox do |v|

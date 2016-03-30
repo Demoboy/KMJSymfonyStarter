@@ -1,34 +1,7 @@
 -   name: Install PHP Packages
     become: yes
-    apt: pkg={{ item }} state=latest
+    apt: pkg="{{ item }}" state=latest
     with_items: php_7_packages
-  
--   name: Install phpcs
-    become: yes
-    command: pear install PHP_CodeSniffer
-    args:
-      creates: /usr/bin/phpcs
-  
--   name: Install pear channels
-    become: yes
-    command: pear channel-discover {{ item }}
-    ignore_errors: yes
-    with_items:
-         - pear.phpmd.org
-         - pear.pdepend.org
-         - pear.phpdoc.org
-
--   name: Install PHP Mess Detector
-    become: yes
-    command: pear install phpmd/PHP_PMD
-    args:
-        creates: /usr/bin/phpmd
-  
--   name: Install PHPDocumentor
-    become: yes
-    command: pear install phpdoc/phpDocumentor
-    args:
-        creates: /usr/bin/phpdoc
       
 -   name: Remove xdebug from CLI
     become: yes

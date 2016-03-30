@@ -15,7 +15,7 @@
     apt: pkg=libapache2-mod-fcgid state=latest
   
 -   name: Enable needed apache mods
-    apache2_module: name={{ item }} state=present
+    apache2_module: name="{{ item }}" state=present
     with_items:
         - proxy
         - proxy_fcgi
