@@ -27,9 +27,8 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
-        gc_probability: 0
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -38,27 +37,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
-# Assetic Configuration
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: true
-    #bundles:        [ ]
-    #java: /usr/bin/java
-    filters:
-        uglifyjs:
-            node: %node_path%
-            bin: %uglify_js_path%
-        uglifycss:
-            node:  %node_path%
-            bin: %uglify_css%
-            cssrewrite: ~
-        less:
-            node:  %node_path%
-            node_paths: [%node_module_path%]
-            bin: %less_path%
-            apply_to: \.less$
-        
+    
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -84,6 +63,27 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+    
+    
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: true
+    #bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        uglifyjs:
+            node: %node_path%
+            bin: %uglify_js_path%
+        uglifycss:
+            node:  %node_path%
+            bin: %uglify_css%
+        cssrewrite: ~
+        less:
+            node:  %node_path%
+            node_paths: [%node_module_path%]
+            bin: %less_path%
+            apply_to: \.less$
 
 fos_user:
     db_driver: orm

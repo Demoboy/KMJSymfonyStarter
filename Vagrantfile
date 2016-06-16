@@ -57,10 +57,10 @@ Vagrant.configure("2") do |config|
   else
   
     config.vm.provider :virtualbox or config.vm.provider :vmware_fusion do |v|
-      config.vm.box = "helderco/trusty64"
+      config.vm.box = "bento/ubuntu-14.04"
 
       config.ssh.forward_agent = true
-      config.vm.synced_folder '.', '/vagrant', nfs: true
+        config.vm.synced_folder ".", "/vagrant", id: "v-root", mount_options: ["rw", "tcp", "nolock", "noacl", "async", "v3"], type: "nfs", nfs_udp: false
       config.vm.synced_folder '~/.ssh', '/home/vagrant/host_ssh', nfs: true
         
       config.vm.provider :virtualbox do |virtualbox|

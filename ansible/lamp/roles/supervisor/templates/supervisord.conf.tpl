@@ -1,5 +1,5 @@
 [program:{{ servername }}_job_queue_runner]
-command=php /vagrant/app/console jms-job-queue:run --env={{ enviroment }} --verbose
+command=php /vagrant/bin/console jms-job-queue:run --env={{ enviroment }} --verbose
 process_name=%(program_name)s
 numprocs=1
 directory=/tmp

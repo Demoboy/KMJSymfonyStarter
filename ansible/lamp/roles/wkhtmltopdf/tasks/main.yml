@@ -1,13 +1,26 @@
 -   name: Check wkhtmltopdf download
     stat: path=/usr/local/bin/wkhtmltopdf
     register: wkhtmltopdf_install
+    
+-   name: Install dependancies
+    when: wkhtmltopdf_install.stat.exists == False
+    apt: name=libxrender-dev state=present
    
 -   name: Download wkhtmltopdf
     when: wkhtmltopdf_install.stat.exists == False
+    become: yes
     get_url: url={{ wkhtmltopdf_url }}
-             dest=/tmp/wkhtmltopdf.deb
+             dest=/tmp/wkhtmltopdf.tar
    
--   name: Install wkhtmltopdf
+-   name: Extract wkhtmltopdf
     when: wkhtmltopdf_install.stat.exists == False
-    apt: deb=/tmp/wkhtmltopdf.deb
-   
+    become: yes
+    unarchive: src=/tmp/wkhtmltopdf.tar dest=/tmp copy=no
+    args:
+        creates: /tmp/wkhtmltox
+        
+-   name: Install wkhtmltopdf
+    become: yes
+    when: wkhtmltopdf_install.stat.exists == False
+    shell: rsync -a /tmp/wkhtmltox/* /usr/local
+    
